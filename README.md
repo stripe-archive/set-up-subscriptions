@@ -1,6 +1,6 @@
 # Stripe Billing charging for subscriptions
 
-This sample shows how to create a customer and subscribe them to a plan with
+This sample shows how to create a customer and subscribe them to a flat rate single plan with
 [Stripe Billing](https://stripe.com/billing). For step by step directions of how to
 implement this use the [Stripe Billing quickstart](https://stripe.com/docs/billing/quickstart).
 
