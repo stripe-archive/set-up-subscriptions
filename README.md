@@ -9,9 +9,9 @@ See a hosted version of the [demo](https://lbq6y.sse.codesandbox.io/) in test mo
 
 Features:
 
-Collect card details 💳
-Save a card to a customer
-Subscribe a customer to a plan in Stripe Billing 💰
+- Collect card details 💳
+- Save a card to a customer
+- Subscribe a customer to a plan in Stripe Billing 💰
 
 ## How to run locally
 
