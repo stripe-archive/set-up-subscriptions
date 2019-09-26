@@ -1,6 +1,6 @@
 # Stripe Billing charging for subscriptions
 
-This sample shows how to create a customer and subscribe them to a plan with
+This sample shows how to create a customer and subscribe them to a flat rate single plan with
 [Stripe Billing](https://stripe.com/billing). For step by step directions of how to
 implement this use the [Stripe Billing quickstart](https://stripe.com/docs/billing/quickstart).
 
@@ -9,9 +9,9 @@ See a hosted version of the [demo](https://lbq6y.sse.codesandbox.io/) in test mo
 
 Features:
 
-Collect card details 💳
-Save a card to a customer
-Subscribe a customer to a plan in Stripe Billing 💰
+- Collect card details 💳
+- Save a card to a customer
+- Subscribe a customer to a plan in Stripe Billing 💰
 
 ## How to run locally
 
