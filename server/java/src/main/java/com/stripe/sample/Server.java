@@ -56,7 +56,7 @@ public class Server {
         String ENV_PATH = "../../";
         Dotenv dotenv = Dotenv.configure().directory(ENV_PATH).load();
 
-        Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
+        Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
 
         staticFiles.externalLocation(
                 Paths.get(Paths.get("").toAbsolutePath().toString(), dotenv.get("STATIC_DIR")).normalize().toString());
