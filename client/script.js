@@ -35,13 +35,23 @@ var stripeElements = function(publicKey) {
 
   document.querySelector('#submit').addEventListener('click', function(evt) {
     evt.preventDefault();
-    document.querySelector('#submit').disabled = true;
+    changeLoadingState(true);
     // Initiate payment
-    pay(stripe, card);
+    createPaymentMethodAndCustomer(stripe, card);
   });
 };
 
-var pay = function(stripe, card) {
+function showCardError(error) {
+  changeLoadingState(false);
+  // The card was declined (i.e. insufficient funds, card has expired, etc)
+  var errorMsg = document.querySelector('.sr-field-error');
+  errorMsg.textContent = error.message;
+  setTimeout(function() {
+    errorMsg.textContent = '';
+  }, 4000);
+}
+
+var createPaymentMethodAndCustomer = function(stripe, card) {
   var cardholderEmail = document.querySelector('#email').value;
   stripe
     .createPaymentMethod('card', card, {
@@ -51,20 +61,14 @@ var pay = function(stripe, card) {
     })
     .then(function(result) {
       if (result.error) {
-        document.querySelector('#submit').disabled = false;
-        // The card was declined (i.e. insufficient funds, card has expired, etc)
-        var errorMsg = document.querySelector('.sr-field-error');
-        errorMsg.textContent = result.error.message;
-        setTimeout(function() {
-          errorMsg.textContent = '';
-        }, 4000);
+        showCardError(result.error);
       } else {
         createCustomer(result.paymentMethod.id, cardholderEmail);
       }
     });
 };
 
-function createCustomer(paymentMethod, cardholderEmail) {
+async function createCustomer(paymentMethod, cardholderEmail) {
   return fetch('/create-customer', {
     method: 'post',
     headers: {
@@ -84,19 +88,29 @@ function createCustomer(paymentMethod, cardholderEmail) {
 }
 
 function handleSubscription(subscription) {
-  if (
-    subscription &&
-    subscription.latest_invoice.payment_intent.status === 'requires_action'
-  ) {
-    stripe
-      .handleCardPayment(
-        subscription.latest_invoice.payment_intent.client_secret
-      )
-      .then(function(result) {
-        confirmSubscription(subscription.id);
+  const { latest_invoice } = subscription;
+  const { payment_intent } = latest_invoice;
+
+  if (payment_intent) {
+    const { client_secret, status } = payment_intent;
+
+    if (status === 'requires_action') {
+      stripe.handleCardPayment(client_secret).then(function(result) {
+        if (result.error) {
+          // Display error message in your UI.
+          // The card was declined (i.e. insufficient funds, card has expired, etc)
+          changeLoadingState(false);
+          showCardError(result.error);
+        } else {
+          // Show a success message to your customer
+          confirmSubscription(subscription.id);
+        }
       });
-  } else {
-    orderComplete(subscription);
+    } else {
+      // No additional information was needed
+      // Show a success message to your customer
+      orderComplete(subscription);
+    }
   }
 }
 
@@ -139,6 +153,7 @@ getPublicKey();
 
 /* Shows a success / error message when the payment is complete */
 var orderComplete = function(subscription) {
+  changeLoadingState(false);
   var subscriptionJson = JSON.stringify(subscription, null, 2);
   document.querySelectorAll('.payment-view').forEach(function(view) {
     view.classList.add('hidden');
@@ -147,5 +162,19 @@ var orderComplete = function(subscription) {
     view.classList.remove('hidden');
   });
   document.querySelector('.order-status').textContent = subscription.status;
-  document.querySelector('pre').textContent = subscriptionJson;
+  document.querySelector('code').textContent = subscriptionJson;
+};
+
+// Show a spinner on subscription submission
+var changeLoadingState = function(isLoading) {
+  if (isLoading) {
+    document.querySelector('#spinner').classList.add('loading');
+    document.querySelector('button').disabled = true;
+
+    document.querySelector('#button-text').classList.add('hidden');
+  } else {
+    document.querySelector('button').disabled = false;
+    document.querySelector('#spinner').classList.remove('loading');
+    document.querySelector('#button-text').classList.remove('hidden');
+  }
 };

@@ -61,6 +61,7 @@ h4 {
   margin-bottom: 32px;
 }
 .sr-payment-summary {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 .sr-main,
@@ -72,7 +73,7 @@ h4 {
   align-self: center;
 }
 .sr-main {
-  width: var(--form-width);
+  /* width: var(--form-width); */
 }
 .sr-content {
   padding-left: 48px;
@@ -298,13 +299,16 @@ a:active {
   background: var(--gray-offset);
   padding: 12px;
   border-radius: var(--radius);
-  max-height: 200px;
+  max-height: 400px;
+  max-width: 600px;
   overflow: auto;
 }
 code,
 pre {
   font-family: 'SF Mono', 'IBM Plex Mono', 'Menlo', monospace;
-  font-size: 12px;
+  font-size: 14px;
+  overflow-x: auto;
+  white-space: pre-wrap;
 }
 
 /* Stripe Element placeholder */
@@ -409,8 +413,68 @@ pre {
 .sr-payment-form .sr-form-row:nth-child(6) {
   animation-delay: 300ms;
 }
+
 .hidden {
   display: none;
+}
+
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.sr-plans {
+  display: flex;
+  width: 600px;
+}
+
+.sr-plan {
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 6px;
+  margin-right: 25px;
+  height: 226px;
+  width: 257px;
+}
+
+.sr-plan-inner {
+  margin: 28px;
+}
+
+.sr-plan-name {
+  color: rgb(166, 166, 166);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0px;
+}
+
+.sr-plan-text {
+  color: rgb(153, 153, 153);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 14px;
+}
+
+.sr-plan-button {
+  border: 2px solid rgb(237, 95, 116);
+  border-radius: 7px;
 }
 
 @keyframes field-in {
