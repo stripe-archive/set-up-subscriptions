@@ -49,8 +49,9 @@ func main() {
   e.Use(middleware.Logger())
   e.Use(middleware.Recover())
   e.Renderer = echoview.Default()
-  e.Static("/", "../../client")
-  e.File("/", "../../client/index.html")
+
+  e.Static("/", os.Getenv("STATIC_DIR"))
+  e.File("/", os.Getenv("STATIC_DIR") + "/index.html")
 
   e.GET("/public-key", func(c echo.Context) error {
     resp := &PublicKey{
