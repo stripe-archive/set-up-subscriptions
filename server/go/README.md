@@ -18,6 +18,7 @@ An [Echo](https://echo.labstack.com/) implementation.
 go get -u github.com/labstack/echo/...
 go get github.com/joho/godotenv
 go get -u github.com/stripe/stripe-go
+go get github.com/foolin/goview
 ```
 
 2. Run the application
