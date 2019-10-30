@@ -48,7 +48,7 @@ function showCardError(error) {
   errorMsg.textContent = error.message;
   setTimeout(function() {
     errorMsg.textContent = '';
-  }, 4000);
+  }, 8000);
 }
 
 var createPaymentMethodAndCustomer = function(stripe, card) {
@@ -94,7 +94,7 @@ function handleSubscription(subscription) {
   if (payment_intent) {
     const { client_secret, status } = payment_intent;
 
-    if (status === 'requires_action') {
+    if (status === 'requires_action' || status === 'requires_payment_method') {
       stripe.handleCardPayment(client_secret).then(function(result) {
         if (result.error) {
           // Display error message in your UI.
@@ -111,6 +111,8 @@ function handleSubscription(subscription) {
       // Show a success message to your customer
       orderComplete(subscription);
     }
+  } else {
+    orderComplete(subscription);
   }
 }
 
