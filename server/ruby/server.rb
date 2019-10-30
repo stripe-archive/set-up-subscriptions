@@ -21,7 +21,7 @@ get '/public-key' do
   content_type 'application/json'
 
   {
-    'publicKey': ENV['STRIPE_PUBLIC_KEY']
+    'publicKey': ENV['STRIPE_PUBLISHABLE_KEY']
   }.to_json
 end
 

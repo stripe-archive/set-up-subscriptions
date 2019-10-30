@@ -55,7 +55,7 @@ func main() {
 
   e.GET("/public-key", func(c echo.Context) error {
     resp := &PublicKey{
-      PublicKey: os.Getenv("STRIPE_PUBLIC_KEY"),
+      PublicKey: os.Getenv("STRIPE_PUBLISHABLE_KEY"),
     }
     return c.JSON(http.StatusOK, resp)
   })
