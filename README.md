@@ -15,7 +15,33 @@ Features:
 
 ## How to run locally
 
-This recipe includes [5 server implementations](server/README.md) in our most popular languages.
+This recipe includes [6 server implementations](server/README.md) in our most popular languages.
+
+Follow the steps below to run locally.
+
+**1. Clone and configure the sample**
+
+The Stripe CLI is the fastest way to clone and configure a sample to run locally. 
+
+**Using the Stripe CLI**
+
+If you haven't already installed the CLI, follow the [installation steps](https://github.com/stripe/stripe-cli#installation) in the project README. The CLI is useful for cloning samples and locally testing webhooks and Stripe integrations.
+
+In your terminal shell, run the Stripe CLI command to clone the sample:
+
+```
+stripe samples create create-subscriptions
+```
+
+The CLI will walk you through picking your integration type, server and client languages, and configuring your .env config file with your Stripe API keys.
+
+**Installing and cloning manually**
+
+If you do not want to use the Stripe CLI, you can manually clone and configure the sample yourself:
+
+```
+git clone https://github.com/stripe-samples/create-subscriptions
+```
 
 Copy the .env.example file into a file named .env in the folder of the server you want to use. For example:
 
@@ -23,12 +49,31 @@ Copy the .env.example file into a file named .env in the folder of the server yo
 cp .env.example server/node/.env
 ```
 
-You will need a Stripe account in order to run the sample. Once you set up your account, go to the Stripe [developer dashboard](https://stripe.com/docs/development#api-keys) to find your API keys.
+You will need a Stripe account in order to run the demo. Once you set up your account, go to the Stripe [developer dashboard](https://stripe.com/docs/development#api-keys) to find your API keys.
 
 ```
 STRIPE_PUBLISHABLE_KEY=<replace-with-your-publishable-key>
 STRIPE_SECRET_KEY=<replace-with-your-secret-key>
 ```
+
+`STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
+
+**2. Create Products and Plans on Stripe** 
+
+This sample requires a [Plan](https://stripe.com/docs/api/plans/object) ID to create the subscription. Products and Plans are objects on Stripe that lets you model a subscription. 
+
+You can create Products and Plans [in the dashboard](https://dashboard.stripe.com/products) or via [the API](https://stripe.com/docs/api/plans/create). Create a Plan to run this sample and add it to your .env.
+
+**3. Follow the server instructions on how to run:**
+
+Pick the server language you want and follow the instructions in the server folder README on how to run.
+
+```
+cd server/node # there's a README in this folder with instructions
+npm install
+npm start
+```
+
 
 ## FAQ
 

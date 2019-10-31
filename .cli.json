@@ -1,0 +1,12 @@
+{
+    "name": "creating-subscriptions",
+    "configureDotEnv": true,
+    "integrations": [
+      {
+        "name": "main",
+        "clients": ["web"],
+        "servers": ["java", "node", "php-slim", "php", "python", "ruby", "go"]
+      }
+    ]
+  }
+  
