@@ -1,4 +1,4 @@
-# Stripe Billing creating subscriptions
+# Stripe Billing set up subscriptions
 
 This sample shows how to create a customer and subscribe them to a flat rate single plan with
 [Stripe Billing](https://stripe.com/billing). For step by step directions of how to
