@@ -95,7 +95,7 @@ function handleSubscription(subscription) {
     const { client_secret, status } = payment_intent;
 
     if (status === 'requires_action' || status === 'requires_payment_method') {
-      stripe.handleCardPayment(client_secret).then(function(result) {
+      stripe.confirmCardPayment(client_secret).then(function(result) {
         if (result.error) {
           // Display error message in your UI.
           // The card was declined (i.e. insufficient funds, card has expired, etc)
