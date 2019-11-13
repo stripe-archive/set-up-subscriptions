@@ -27,7 +27,7 @@ If you haven't already installed the CLI, follow the [installation steps](https:
 In your terminal shell, run the Stripe CLI command to clone the sample:
 
 ```
-stripe samples create create-subscriptions
+stripe samples create set-up-subscriptions
 ```
 
 The CLI will walk you through picking your integration type, server and client languages, and configuring your `.env` config file with your Stripe API keys.
