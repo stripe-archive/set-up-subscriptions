@@ -37,7 +37,7 @@ The CLI will walk you through picking your integration type, server and client l
 If you do not want to use the Stripe CLI, you can manually clone and configure the sample:
 
 ```
-git clone https://github.com/stripe-samples/create-subscriptions
+git clone https://github.com/stripe-samples/set-up-subscriptions
 ```
 
 Copy the `.env.example` file into a file named `.env` in the folder of the server you want to use. For example:
