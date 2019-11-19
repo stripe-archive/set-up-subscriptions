@@ -73,7 +73,7 @@ h4 {
   align-self: center;
 }
 .sr-main {
-  /* width: var(--form-width); */
+  width: var(--form-width);
 }
 .sr-content {
   padding-left: 48px;
