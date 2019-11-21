@@ -3,6 +3,15 @@
 This sample shows how to create a customer and subscribe them to a plan with
 [Stripe Billing](https://stripe.com/billing). You can find step by step directions in the [Set up a Subscription](https://stripe.com/docs/billing/subscriptions/creating-subscriptions) guide.
 
+The sample uses Stripe Elements, a web UI library of customizable form fields, to build the UI to collect card details. If you want to set up a subscription page quickly we suggest using Checkout, our prebuilt responsive payment page that comes with Apple Pay & Google Pay and internalization support out of the box.
+
+<!-- prettier-ignore -->
+|     | Checkout ([checkout-subscription-and-add-on](https://github.com/stripe-samples/checkout-subscription-and-add-on)) | Elements (this sample)
+:--- | :--- | :---
+✨ **UI Interface to collect card details**  | Prebuilt hosted payment page with options to customize limited pieces like the business logo and submit button text | Prebuilt, extremely customizable HTML input elements that securely collect card number, CVC, and exp date and are extremely customizable |
+📱 **Apple Pay & Google Pay support**  | Built in, no extra code needed  | Requires extra code |
+⤵️ **Coupon support for subscriptions**  | Does not support coupons | Supports coupons |
+
 You can also see a hosted version of the [demo](https://lbq6y.sse.codesandbox.io/) in test mode or fork it on [codesandbox.io](https://codesandbox.io/s/stripe-billing-quickstart-demo-lbq6y).
 <img src="billing-subscriptions-quickstart.gif" alt="Preview of recipe" align="center">
 
