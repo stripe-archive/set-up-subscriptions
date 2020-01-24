@@ -65,7 +65,7 @@ def create_customer():
         )
         return jsonify(subscription)
     except Exception as e:
-        return jsonify(e), 403
+        return jsonify(error=str(e)), 403
 
 
 @app.route('/subscription', methods=['POST'])
@@ -76,7 +76,7 @@ def getSubscription():
         subscription = stripe.Subscription.retrieve(data['subscriptionId'])
         return jsonify(subscription)
     except Exception as e:
-        return jsonify(e), 403
+        return jsonify(error=str(e)), 403
 
 
 @app.route('/webhook', methods=['POST'])
