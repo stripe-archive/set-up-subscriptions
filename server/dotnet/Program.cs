@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -5,6 +6,8 @@ namespace sample
 {
     public class Program
     {
+        private const string StripeWebrootKey = "STATIC_DIR";
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -14,8 +17,11 @@ namespace sample
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    var webRoot = Environment.GetEnvironmentVariable(StripeWebrootKey);
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseWebRoot("../../client/");
+
+                    // Setting web root here since client folder is reused across different server samples.
+                    webBuilder.UseWebRoot(webRoot);
                 });
     }
 }
