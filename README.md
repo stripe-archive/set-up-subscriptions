@@ -23,7 +23,7 @@ Features:
 
 ## How to run locally
 
-This sample includes [6 server implementations](server/README.md) in our most popular languages. Follow the steps below to run locally.
+This sample includes [7 server implementations](server/README.md) in our most popular languages. Follow the steps below to run locally.
 
 **1. Clone and configure the sample**
 
