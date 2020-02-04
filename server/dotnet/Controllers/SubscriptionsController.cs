@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using System.IO;
+using Newtonsoft.Json;
+using System;
 using Stripe;
 
 public class SubscriptionsController : Controller
@@ -9,11 +13,13 @@ public class SubscriptionsController : Controller
 
   private readonly StripeClient client;
   private readonly IOptions<StripeOptions> options;
+  private readonly ILogger<SubscriptionsController> logger;
 
-  public SubscriptionsController(IOptions<StripeOptions> options)
+  public SubscriptionsController(IOptions<StripeOptions> options, ILogger<SubscriptionsController> logger)
   {
     this.options = options;
     this.client = new StripeClient(options.Value.StripeSecretKey);
+    this.logger = logger;
   }
 
   [HttpGet("public-key")]
@@ -57,5 +63,22 @@ public class SubscriptionsController : Controller
     });
 
     return subscription;
+  }
+
+  [HttpPost("webhook")]
+  public async Task<IActionResult> ProcessWebhookEvent()
+  {
+    var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+
+    try
+    {
+        var stripeEvent = EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"], this.options.Value.StripeWebhookSecret);
+        logger.LogInformation($"Webhook event type: {stripeEvent.Type}");
+        logger.LogInformation(json);
+        return Ok();
+    } catch (Exception e) {
+      logger.LogError(e, "Exception while processing webhook event.");
+      return BadRequest();
+    }
   }
 }
