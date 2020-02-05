@@ -8,6 +8,8 @@ namespace sample
     {
         private const string StripeWebrootKey = "STATIC_DIR";
 
+        private const string DefaultStaticDir = "../../client";
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -18,6 +20,9 @@ namespace sample
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     var webRoot = Environment.GetEnvironmentVariable(StripeWebrootKey);
+
+                    // If user forgets to set webroot, or improperly set - default to the current sample client folder.
+                    webRoot = webRoot ??= DefaultStaticDir;
                     webBuilder.UseStartup<Startup>();
 
                     // Setting web root here since client folder is reused across different server samples.
