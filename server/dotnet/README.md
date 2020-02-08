@@ -9,11 +9,9 @@ If you do not already have dotnet installed, download it from here: https://dotn
 
 1. Navigate to the Stripe Dashboard to retrieve the API Keys necessary to run the sample.
 2. Create a [plan](https://stripe.com/docs/billing/subscriptions/products-and-plans) using the Dashboard or the Stripe CLI.
-3. Fill out the following values in the [appsettings.Development.json](appsettings.Development.json) file.
-    1. `StripePublishableKey`
-    2. `StripeSecretKey`
-    3. `SubscriptionPlanId`
-4. Set the `STATIC_DIR` environment variable to `../../client`.
+3. Fill out the values in the [.env.example](../../.env.example) file.
+4. Run the following command: `cp .env.example server/dotnet/.env` to move the .env file into this directory.
+5. Set the `STATIC_DIR` environment variable to `../../client`.
     - Note: This is only because the various sample server implementations use the same client code.
 
 ## Run the application

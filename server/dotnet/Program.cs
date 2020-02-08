@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using DotNetEnv;
 
 namespace sample
 {
@@ -15,8 +16,11 @@ namespace sample
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            // Load the .env file if one exists.
+            DotNetEnv.Env.Load();
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     var webRoot = Environment.GetEnvironmentVariable(StripeWebrootKey);
@@ -28,5 +32,7 @@ namespace sample
                     // Setting web root here since client folder is reused across different server samples.
                     webBuilder.UseWebRoot(webRoot);
                 });
+        }
+            
     }
 }

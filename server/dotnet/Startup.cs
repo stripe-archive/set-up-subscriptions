@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using System;
 
 namespace sample
 {
@@ -18,7 +19,13 @@ namespace sample
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.Configure<StripeOptions>(Configuration);
+      services.Configure<StripeOptions>(stripeOptions =>
+      {
+        stripeOptions.StripePublishableKey = Environment.GetEnvironmentVariable("STRIPE_PUBLISHABLE_KEY");
+        stripeOptions.StripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+        stripeOptions.StripeWebhookSecret = Environment.GetEnvironmentVariable("STRIPE_WEBHOOK_SECRET");
+        stripeOptions.SubscriptionPlanId = Environment.GetEnvironmentVariable("SUBSCRIPTION_PLAN_ID");
+      });
 
       // Serialize JSON back in a way the sample JavaScript expects.
       services.AddControllersWithViews().AddNewtonsoftJson(options =>
