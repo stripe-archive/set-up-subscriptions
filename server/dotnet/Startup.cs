@@ -32,7 +32,7 @@ namespace sample
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver
                 {
-                NamingStrategy = new SnakeCaseNamingStrategy()
+                    NamingStrategy = new SnakeCaseNamingStrategy()
                 };
             });
         }

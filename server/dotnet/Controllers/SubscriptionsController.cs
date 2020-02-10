@@ -39,11 +39,11 @@ public class SubscriptionsController : Controller
         var customer = await customerService.CreateAsync(new CustomerCreateOptions
         {
             Email = request.Email,
-                PaymentMethod = request.PaymentMethod,
-                InvoiceSettings = new CustomerInvoiceSettingsOptions
-                {
-                    DefaultPaymentMethod = request.PaymentMethod,
-                }
+            PaymentMethod = request.PaymentMethod,
+            InvoiceSettings = new CustomerInvoiceSettingsOptions
+            {
+                DefaultPaymentMethod = request.PaymentMethod,
+            }
         });
 
         var subscriptionService = new SubscriptionService(this.client);
@@ -51,17 +51,17 @@ public class SubscriptionsController : Controller
         var subscription = await subscriptionService.CreateAsync(new SubscriptionCreateOptions
         {
             Items = new List<SubscriptionItemOptions>
+            {
+                new SubscriptionItemOptions
                 {
-                    new SubscriptionItemOptions
-                    {
-                        Plan = this.options.Value.SubscriptionPlanId,
-                    },
+                    Plan = this.options.Value.SubscriptionPlanId,
                 },
-                Customer = customer.Id,
-                Expand = new List<string>
-                {
-                    "latest_invoice.payment_intent",
-                }
+            },
+            Customer = customer.Id,
+            Expand = new List<string>
+            {
+                "latest_invoice.payment_intent",
+            }
         });
 
         return subscription;
