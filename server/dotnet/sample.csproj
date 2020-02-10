@@ -10,7 +10,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Stripe.net" Version="34.18.0" />
   </ItemGroup>
-
-
-
 </Project>

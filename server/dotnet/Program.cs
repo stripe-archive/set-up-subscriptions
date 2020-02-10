@@ -1,7 +1,7 @@
 using System;
+using DotNetEnv;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using DotNetEnv;
 
 namespace sample
 {
@@ -33,6 +33,6 @@ namespace sample
                     webBuilder.UseWebRoot(webRoot);
                 });
         }
-            
+
     }
 }
