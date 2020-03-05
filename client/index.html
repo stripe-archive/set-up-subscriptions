@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Stripe Payment Page Recipe</title>
+    <title>Stripe Billing Subscription</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A demo of Stripe Billing" />
 
@@ -18,42 +18,77 @@
         <header class="sr-header">
           <div class="sr-header__logo"></div>
         </header>
-        <div class="sr-payment-summary payment-view">
-          <h1 class="order-amount">$14.00</h1>
+        <div class="sr-payment-summary sr-form">
+          <h1 class="order-amount">$14.00 per month</h1>
           <h4>Subscribe to the 3 photo plan</h4>
         </div>
-        <form>
-          <div class="sr-payment-form payment-view">
+        <div id="signup-view" class="sr-form">
+          <form id="signup-form">
             <div class="sr-form-row">
-              <label for="card-element">
-                Payment details
-              </label>
+              <div class="sr-combo-inputs">
+                <input id="name" placeholder="Jenny Rosen" class="sr-input" />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="jenny.rosen@example.com"
+                  class="sr-input"
+                />
+              </div>
+            </div>
+            <button type="submit">Signup</button>
+          </form>
+        </div>
+        <div id="payment-view" class="sr-form hidden">
+          <form id="payment-form">
+            <nav id="payment-methods" class="sr-form-row">
+              <ul>
+                <li class="visible">
+                  <input
+                    type="radio"
+                    name="payment"
+                    id="payment-card"
+                    value="card"
+                    checked
+                  />
+                  <label for="payment-card">Card</label>
+                </li>
+                <li class="visible">
+                  <input
+                    type="radio"
+                    name="payment"
+                    id="payment-au_becs_debit"
+                    value="au_becs_debit"
+                  />
+                  <label for="payment-au_becs_debit">BECS Debit</label>
+                </li>
+              </ul>
+            </nav>
+            <div class="sr-form-row payment-info card visible">
               <div class="sr-combo-inputs">
                 <div class="sr-combo-inputs-row">
-                  <input
-                    type="text"
-                    id="email"
-                    placeholder="Email"
-                    autocomplete="cardholder"
-                    class="sr-input"
-                  />
-                </div>
-                <div class="sr-combo-inputs-row">
-                  <div class="sr-input sr-card-element" id="card-element"></div>
+                  <div class="sr-input sr-element" id="card-element"></div>
                 </div>
               </div>
-              <div class="sr-field-error" id="card-errors" role="alert"></div>
             </div>
-            <button id="submit">
+            <div class="sr-form-row payment-info au_becs_debit">
+              <div class="sr-combo-inputs-row">
+                <div class="sr-input sr-element" id="auBankAccount-element">
+                  <!-- A Stripe Element will be inserted here. -->
+                </div>
+              </div>
+              <div id="bank-name"></div>
+            </div>
+            <div id="error-message" class="sr-field-error" role="alert"></div>
+            <button type="submit">
               <div id="spinner" class="hidden"></div>
               <span id="button-text">Subscribe</span>
             </button>
             <div class="sr-legal-text">
-              Your card will be immediately charged
-              <span class="order-total">$14.00</span>.
+              Your will be charged
+              <span class="order-total">$14.00</span> every month.
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
         <div class="sr-payment-summary hidden completed-view">
           <h1>Your subscription is <span class="order-status"></span></h1>
           <h4>

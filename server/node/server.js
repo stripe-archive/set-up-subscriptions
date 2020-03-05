@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const { resolve } = require('path');
 // Replace if using a different env file or config
-const env = require('dotenv').config({ path: "./.env" });
+require('dotenv').config({ path: './.env' });
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(express.static(process.env.STATIC_DIR));
@@ -29,30 +29,33 @@ app.get('/public-key', (req, res) => {
 });
 
 app.post('/create-customer', async (req, res) => {
-  // This creates a new Customer and attaches
-  // the PaymentMethod to be default for invoice in one API call.
   const customer = await stripe.customers.create({
-    payment_method: req.body.payment_method,
-    email: req.body.email,
-    invoice_settings: {
-      default_payment_method: req.body.payment_method
-    }
-  });
-  // At this point, associate the ID of the Customer object with your
-  // own internal representation of a customer, if you have one.
-  const subscription = await stripe.subscriptions.create({
-    customer: customer.id,
-    items: [{ plan: process.env.SUBSCRIPTION_PLAN_ID }],
-    expand: ['latest_invoice.payment_intent']
+    name: req.body.name,
+    email: req.body.email
   });
 
-  res.send(subscription);
+  const setupIntent = await stripe.setupIntents.create({
+    payment_method_types: ['card', 'au_becs_debit'],
+    customer: customer.id
+  });
+
+  res.send({ customer, setupIntent });
 });
 
 app.post('/subscription', async (req, res) => {
-  let subscription = await stripe.subscriptions.retrieve(
-    req.body.subscriptionId
-  );
+  // Set the default payment method on the customer
+  await stripe.customers.update(req.body.customerId, {
+    invoice_settings: {
+      default_payment_method: req.body.paymentMethodId
+    }
+  });
+
+  // Create the subscription
+  const subscription = await stripe.subscriptions.create({
+    customer: req.body.customerId,
+    items: [{ plan: process.env.SUBSCRIPTION_PLAN_ID }],
+    expand: ['latest_invoice.payment_intent']
+  });
   res.send(subscription);
 });
 
