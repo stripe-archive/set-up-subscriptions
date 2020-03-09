@@ -128,9 +128,7 @@ func main() {
       }
     }
 
-    objectType := event.Data.Object["object"].(string)
-
-    switch objectType {
+    switch event.Type {
     case "customer.created":
       // Handle logic when a customer is created
     case "customer.updated":
@@ -149,5 +147,5 @@ func main() {
     return c.JSON(http.StatusOK, event)
   })
 
-  e.Logger.Fatal(e.Start(":4242"))
+  e.Logger.Fatal(e.Start("localhost:4242"))
 }
