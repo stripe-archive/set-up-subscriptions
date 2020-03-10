@@ -67,6 +67,14 @@ public class SubscriptionsController : Controller
         return subscription;
     }
 
+    [HttpPost("subscription")]
+    public async Task<ActionResult<Subscription>> RetrieveSubscriptionAsync([FromBody] SubscriptionRetrieveRequest request)
+    {
+        var subscriptionService = new SubscriptionService(this.client);
+
+        return await subscriptionService.GetAsync(request.SubscriptionId);
+    }
+
     [HttpPost("webhook")]
     public async Task<IActionResult> ProcessWebhookEvent()
     {
