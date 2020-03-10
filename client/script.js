@@ -94,7 +94,7 @@ function handleSubscription(subscription) {
   if (payment_intent) {
     const { client_secret, status } = payment_intent;
 
-    if (status === 'requires_action' || status === 'requires_payment_method') {
+    if (status === 'requires_action') {
       stripe.confirmCardPayment(client_secret).then(function(result) {
         if (result.error) {
           // Display error message in your UI.
