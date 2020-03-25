@@ -8,7 +8,7 @@ The sample uses Stripe Elements, a web UI library of customizable form fields, t
 <!-- prettier-ignore -->
 |     | Checkout ([checkout-subscription-and-add-on](https://github.com/stripe-samples/checkout-subscription-and-add-on)) | Elements (this sample)
 :--- | :--- | :---
-✨ **UI Interface to collect card details**  | Prebuilt hosted payment page with options to customize limited pieces like the business logo and submit button text | Prebuilt, extremely customizable HTML input elements that securely collect card number, CVC, and exp date and are extremely customizable |
+✨ **UI Interface to collect card details**  | Prebuilt hosted payment page with options to customize limited pieces like the business logo and submit button text | Prebuilt, extremely customizable HTML input elements that securely collect card number, CVC, and exp date |
 📱 **Apple Pay & Google Pay support**  | Built in, no extra code needed  | Requires extra code |
 ⤵️ **Coupon support for subscriptions**  | Does not support coupons | Supports coupons |
 
