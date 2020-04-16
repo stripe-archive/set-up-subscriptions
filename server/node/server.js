@@ -32,7 +32,6 @@ app.post('/create-customer', async (req, res) => {
   // This creates a new Customer and attaches
   // the PaymentMethod to be default for invoice in one API call.
   const customer = await stripe.customers.create({
-    payment_method: req.body.payment_method,
     email: req.body.email,
     invoice_settings: {
       default_payment_method: req.body.payment_method
