@@ -11,7 +11,7 @@
 
 ```
 python3 -m venv /path/to/new/virtual/environment
-source /path/to/new/virtual/environment/venv/bin/activate
+source /path/to/new/virtual/environment/bin/activate
 ```
 
 2. Install dependencies
