@@ -1,5 +1,6 @@
 require 'stripe'
 require 'sinatra'
+require "sinatra/reloader" if development?
 require 'dotenv'
 
 # Replace if using a different env file or config
@@ -43,7 +44,7 @@ post '/create-customer' do
     customer: customer.id,
     items: [
       {
-        plan: ENV['SUBSCRIPTION_PLAN_ID']
+        price: ENV['SUBSCRIPTION_PRICE_ID']
       }
     ],
     expand: ['latest_invoice.payment_intent']
