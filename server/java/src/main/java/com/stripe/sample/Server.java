@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +14,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import com.stripe.Stripe;
-import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Customer;
 import com.stripe.model.Event;
 import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.Invoice;
 import com.stripe.model.StripeObject;
 import com.stripe.model.Subscription;
+import com.stripe.param.CustomerCreateParams;
+import com.stripe.param.SubscriptionCreateParams;
+import com.stripe.exception.SignatureVerificationException;
 import com.stripe.net.Webhook;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -71,29 +74,30 @@ public class Server {
 
             CreatePaymentBody postBody = gson.fromJson(request.body(), CreatePaymentBody.class);
             // This creates a new Customer and attaches the PaymentMethod in one API call.
-            Map<String, Object> customerParams = new HashMap<String, Object>();
-            customerParams.put("payment_method", postBody.getPaymentMethod());
-            customerParams.put("email", postBody.getEmail());
-            Map<String, String> invoiceSettings = new HashMap<String, String>();
-            invoiceSettings.put("default_payment_method", postBody.getPaymentMethod());
-            customerParams.put("invoice_settings", invoiceSettings);
+            CustomerCreateParams customerParams =
+              CustomerCreateParams.builder()
+                .setPaymentMethod(postBody.getPaymentMethod())
+                .setEmail(postBody.getEmail())
+                .setInvoiceSettings(
+                  CustomerCreateParams.InvoiceSettings.builder()
+                    .setDefaultPaymentMethod(postBody.getPaymentMethod())
+                    .build())
+                .build();
 
             Customer customer = Customer.create(customerParams);
 
-            // Subscribe customer to a plan
-            Map<String, Object> item = new HashMap<>();
-            item.put("plan", dotenv.get("SUBSCRIPTION_PLAN_ID"));
-            Map<String, Object> items = new HashMap<>();
-            items.put("0", item);
+            //Subscribe the customer to a price
+            SubscriptionCreateParams subscriptionParams =
+              SubscriptionCreateParams.builder()
+                .addItem(
+                  SubscriptionCreateParams.Item.builder()
+                    .setPrice(dotenv.get("SUBSCRIPTION_PRICE_ID"))
+                    .build())
+                .setCustomer(customer.getId())
+                .addAllExpand(Arrays.asList("latest_invoice.payment_intent"))
+                .build();
 
-            Map<String, Object> expand = new HashMap<>();
-            expand.put("0", "latest_invoice.payment_intent");
-            Map<String, Object> params = new HashMap<>();
-            params.put("customer", customer.getId());
-            params.put("items", items);
-            params.put("expand", expand);
-            Subscription subscription = Subscription.create(params);
-
+            Subscription subscription = Subscription.create(subscriptionParams);
             return subscription.toJson();
         });
 
