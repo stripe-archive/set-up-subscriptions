@@ -36,7 +36,7 @@ type PublicKey struct {
 }
 
 func main() {
-  err := godotenv.Load("../../.env")
+  err := godotenv.Load(".env")
 
   if err != nil {
     fmt.Println("Error loading .env file")
@@ -79,7 +79,7 @@ func main() {
 
     items := []*stripe.SubscriptionItemsParams{
       {
-        Plan: stripe.String(os.Getenv("SUBSCRIPTION_PLAN_ID")),
+        Price: stripe.String(os.Getenv("SUBSCRIPTION_PRICE_ID")),
       },
     }
     params := &stripe.SubscriptionParams{
