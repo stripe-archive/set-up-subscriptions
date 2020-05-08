@@ -54,10 +54,12 @@ function showCardError(error) {
 var createPaymentMethodAndCustomer = function(stripe, card) {
   var cardholderEmail = document.querySelector('#email').value;
   stripe
-    .createPaymentMethod('card', card, {
-      billing_details: {
-        email: cardholderEmail
-      }
+    .createPaymentMethod({
+        type: 'card',
+        card: card,
+        billing_details: {
+            email: cardholderEmail,
+        },
     })
     .then(function(result) {
       if (result.error) {
