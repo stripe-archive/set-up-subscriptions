@@ -58,7 +58,7 @@ def create_customer():
             customer=customer.id,
             items=[
                 {
-                    "plan": os.getenv("SUBSCRIPTION_PLAN_ID"),
+                    "price": os.getenv("SUBSCRIPTION_PRICE_ID"),
                 },
             ],
             expand=["latest_invoice.payment_intent"]

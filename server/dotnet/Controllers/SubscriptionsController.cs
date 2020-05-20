@@ -54,7 +54,7 @@ public class SubscriptionsController : Controller
             {
                 new SubscriptionItemOptions
                 {
-                    Plan = this.options.Value.SubscriptionPlanId,
+                    Price = this.options.Value.SubscriptionPriceId,
                 },
             },
             Customer = customer.Id,

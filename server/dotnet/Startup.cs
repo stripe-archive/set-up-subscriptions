@@ -24,7 +24,7 @@ namespace sample
                 stripeOptions.StripePublishableKey = Environment.GetEnvironmentVariable("STRIPE_PUBLISHABLE_KEY");
                 stripeOptions.StripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
                 stripeOptions.StripeWebhookSecret = Environment.GetEnvironmentVariable("STRIPE_WEBHOOK_SECRET");
-                stripeOptions.SubscriptionPlanId = Environment.GetEnvironmentVariable("SUBSCRIPTION_PLAN_ID");
+                stripeOptions.SubscriptionPriceId = Environment.GetEnvironmentVariable("SUBSCRIPTION_PRICE_ID");
             });
 
             // Serialize JSON back in a way the sample JavaScript expects.

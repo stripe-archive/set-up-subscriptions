@@ -79,7 +79,7 @@ func main() {
 
     items := []*stripe.SubscriptionItemsParams{
       {
-        Plan: stripe.String(os.Getenv("SUBSCRIPTION_PLAN_ID")),
+        Price: stripe.String(os.Getenv("SUBSCRIPTION_PRICE_ID")),
       },
     }
     params := &stripe.SubscriptionParams{

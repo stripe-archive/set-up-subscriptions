@@ -39,7 +39,7 @@ $app->get('/public-key', function (Request $request, Response $response, array $
 });
 
 $app->post('/create-customer', function (Request $request, Response $response, array $args) {  
-  $plan_id = getenv('SUBSCRIPTION_PLAN_ID');
+  $price_id = getenv('SUBSCRIPTION_PRICE_ID');
   $body = json_decode($request->getBody());
   
   # This creates a new Customer and attaches the PaymentMethod in one API call.
@@ -57,7 +57,7 @@ $app->post('/create-customer', function (Request $request, Response $response, a
     "customer" => $customer['id'],
     "items" => [
       [
-        "plan" => $plan_id,
+        "price" => $price_id,
       ],
     ], 
     "expand" => ['latest_invoice.payment_intent']
