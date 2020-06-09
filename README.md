@@ -94,3 +94,4 @@ A: We are always looking for new recipe ideas, please email dev-samples@stripe.c
 ## Author(s)
 
 [@ctrudeau-stripe](https://twitter.com/trudeaucj)
+[![Run on Repl.it](https://repl.it/badge/github/stripe-samples/set-up-subscriptions)](https://repl.it/github/stripe-samples/set-up-subscriptions)
